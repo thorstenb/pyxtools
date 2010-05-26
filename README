@@ -81,6 +81,20 @@ Converting that back to xml via "pyx2xml -ns" yields this:
 You notice that the conversion is not lossless in terms of octets
 produced, but should reasonably faithfully conserve the xml info set.
 
+INVOKING
+========
+
+xml2pyx.py <file.xml>: will convert xml file to pyx, on stdout
+
+pyx2xml.py [-ns]: will read pyx data from stdin, and output xml to
+                  stdout. Without the -ns flag, will operate as a pure
+                  filter and output lines as they come in. *With* the
+                  -ns flag, will store entire xml file in memory, to
+                  later add all used namespaces to the first element.
+
+MISC
+====
+
 Feedback to <thb at openoffice dot org>
 
 Have fun hacking,
