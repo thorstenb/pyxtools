@@ -81,6 +81,12 @@ Converting that back to xml via "pyx2xml -ns" yields this:
 You notice that the conversion is not lossless in terms of octets
 produced, but should reasonably faithfully conserve the xml info set.
 
+One noticeable gap is the fact that conforming sax parsers will not
+report the xml prologue, so this is not converted to pyx, instead
+regenerated from scratch inside pyx2xml.py and thus loosing e.g. extra
+standalone attributes etc.
+
+
 INVOKING
 ========
 

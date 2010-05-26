@@ -47,8 +47,8 @@ class PyxConverter (xml.sax.handler.ContentHandler):
     def characters (self, content):
         print "-%s" % self.encode(content)
 
-    def processingInstruction (self, data):
-        print "?%s" % self.encode(data)
+    def processingInstruction (self, target, data):
+        print "?%s %s" % (target, self.encode(data))
 
 if __name__ == "__main__":
     import sys
