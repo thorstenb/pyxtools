@@ -31,9 +31,7 @@ class PyxConverter (xml.sax.handler.ContentHandler):
         pass
 
     def encode (self,s):
-        s = string.replace (s,"\\","\\\\")
-        s = string.replace (s,"\n","\\n")
-        s = string.replace (s,"\t","\\t")
+        return s.replace("\\",r"\\").replace("\n",r"\n").replace("\t",r"\t")
         return s
 
     def startElementNS (self, name, qname, attrs):

@@ -32,7 +32,7 @@ get_attrs = 0
 uris = {}
 lines = []
 
-unescape = lambda s: s.replace(r'\t','\t').replace(r'\\','\\')
+unescape = lambda s: s.replace(r'\t','\t').replace(r'\n','\n').replace(r'\\','\\')
 ns_handling = len(sys.argv) > 1 and sys.argv[1] == '-ns'
 if ns_handling:
    writeln = lambda s: lines.append(s)
