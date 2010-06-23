@@ -36,8 +36,10 @@ class PyxConverter (xml.sax.handler.ContentHandler):
 
     def startElementNS (self, name, qname, attrs):
         print "({%s}%s" % name
-        for (n,v) in attrs.items():
-            print "A{%s}%s %s" % (n[0], n[1], (self.encode(v)))
+        keys = attrs.keys()
+        keys.sort()
+        for n in keys:
+            print "A{%s}%s %s" % (n[0], n[1], (self.encode(attrs[n])))
 
     def endElementNS (self, name, qname):
         print "){%s}%s" % name
