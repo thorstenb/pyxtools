@@ -27,6 +27,15 @@ class DummyResolver:
 class PyxConverter (xml.sax.handler.ContentHandler):
     """SAX handler class that transforms xml into pyx."""
 
+    def __init__(self, fd):
+        self._fd = fd
+
+    def write (self, msg):
+        if self._fd is not None:
+            self._fd.write(msg+"\n")
+        else:
+            print msg
+
     def setDocumentLocator (self, locator):
         pass
 
@@ -35,28 +44,34 @@ class PyxConverter (xml.sax.handler.ContentHandler):
         return s
 
     def startElementNS (self, name, qname, attrs):
-        print "({%s}%s" % name
+        self.write("({%s}%s" % name)
         keys = attrs.keys()
         keys.sort()
         for n in keys:
-            print "A{%s}%s %s" % (n[0], n[1], (self.encode(attrs[n])))
+            self.write("A{%s}%s %s" % (n[0], n[1], (self.encode(attrs[n]))))
 
     def endElementNS (self, name, qname):
-        print "){%s}%s" % name
+        self.write("){%s}%s" % name)
 
     def characters (self, content):
-        print "-%s" % self.encode(content)
+        self.write("-%s" % self.encode(content))
 
     def processingInstruction (self, target, data):
-        print "?%s %s" % (target, self.encode(data))
+        self.write("?%s %s" % (target, self.encode(data)))
 
 if __name__ == "__main__":
     import sys
+    import codecs
     
     parser = xml.sax.make_parser()
     parser.setFeature(xml.sax.handler.feature_namespaces, True)
     parser.setFeature(xml.sax.handler.feature_namespace_prefixes, False)
-    parser.setContentHandler(PyxConverter())
+    out = None
+    if len(sys.argv) == 3 and sys.argv[2] != "-":
+        out = codecs.open(sys.argv[2], encoding='utf-8', mode='w')
+    parser.setContentHandler(PyxConverter( out ))
     parser.setEntityResolver(DummyResolver())
 
     parser.parse(open(sys.argv[1],"r"))
+    if out is not None:
+        out.close()
