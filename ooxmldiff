@@ -2,7 +2,7 @@
 
 function usage()
 {
-    echo "$0 <file1> <file2>"
+    echo "$0 <file1> <file2> [xmlfile]"
 }
 
 function extract()
@@ -23,7 +23,7 @@ function extract()
     done
 }
 
-if [ $# != 2 ]
+if [ $# != 2 -a $# != 3 ]
 then
     usage
     exit 1
@@ -35,13 +35,20 @@ FILE2=$2
 TMP=/tmp/ooxmldiff
 
 # Extract both files
-TMP1=$TMP/`basename $FILE1`
+TMP1=$TMP/`basename $FILE1`1
 extract $FILE1 $TMP1
 
-TMP2=$TMP/`basename $FILE2`
+TMP2=$TMP/`basename $FILE2`2
 extract $FILE2 $TMP2
 
-diff -ru $TMP1 $TMP2
+if [ $# == 3 ]
+then
+    TMP1=$TMP1$3
+    TMP2=$TMP2$3
+    diff -u $TMP1 $TMP2
+else
+    diff -ru $TMP1 $TMP2
+fi
 
 # Clean up the whole place
 rm -r $TMP
