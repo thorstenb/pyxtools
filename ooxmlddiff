@@ -1,0 +1,18 @@
+import os
+import sys
+
+if len(sys.argv) < 3:
+    print "Usage: "+sys.argv[0]+" <directory 1> <directory 2>"
+    sys.exit(1)
+
+ooxmldiff=os.path.dirname(sys.argv[0])+"/"+"ooxmldiff"
+
+dir1=sys.argv[1]
+dir2=sys.argv[2]
+filenames=os.listdir(dir1)
+for filename in filenames:
+    file1=dir1+"/"+filename
+    file2=dir2+"/"+filename
+    if os.path.isfile(file1):
+        print "Processing: "+file1
+        os.system(ooxmldiff+" "+file1+" "+file2)
