@@ -14,6 +14,7 @@
 #
 # Inspired by Sean McGrath's html2pyx, and Peter A. Bigot's saxutils
 # Cobbled together by Thorsten Behrens <thb@openoffice.org>
+# Output to file support by Cedric Bosdonnat <cedricbosdo@openoffice.org>
 #
 import xml.sax
 import string
