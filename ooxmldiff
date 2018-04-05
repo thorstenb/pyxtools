@@ -8,11 +8,11 @@ function usage()
 function extract()
 {
     # First unzip all
-    mkdir -p $2
-    unzip $1 -d $2 >/dev/null 2>&1
+    mkdir -p "$2"
+    unzip "$1" -d "$2" >/dev/null 2>&1
 
     # Then convert the XML files to PYX
-    find $2 -type f | while read F
+    find "$2" -type f | while read F
     do
         mime=`file -b --mime-type $F`
         if [ "z$mime" = "zapplication/xml" ]
@@ -35,19 +35,19 @@ FILE2=$2
 TMP=/tmp/ooxmldiff
 
 # Extract both files
-TMP1=$TMP/`basename $FILE1`1
-extract $FILE1 $TMP1
+TMP1=$TMP/`basename "$FILE1"`1
+extract "$FILE1" "$TMP1"
 
-TMP2=$TMP/`basename $FILE2`2
-extract $FILE2 $TMP2
+TMP2=$TMP/`basename "$FILE2"`2
+extract "$FILE2" "$TMP2"
 
 if [ $# == 3 ]
 then
-    TMP1=$TMP1$3
-    TMP2=$TMP2$3
-    diff -u $TMP1 $TMP2
+    TMP1="$TMP1$3"
+    TMP2="$TMP2$3"
+    diff -u "$TMP1" "$TMP2"
 else
-    diff -ru $TMP1 $TMP2
+    diff -ru "$TMP1" "$TMP2"
 fi
 
 # Clean up the whole place
